@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'TeddyBear.apps.TeddybearConfig',
+    'CustomUser.apps.CustomuserConfig',
+    'StoreManage.apps.StoremanageConfig',
+    'BlogPost.apps.BlogpostConfig',
 ]
 
 MIDDLEWARE = [
