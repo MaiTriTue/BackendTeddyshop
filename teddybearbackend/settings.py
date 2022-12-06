@@ -67,6 +67,7 @@ MIDDLEWARE = [
 
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'teddybearbackend.urls'
@@ -93,21 +94,11 @@ WSGI_APPLICATION = 'teddybearbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if os.environ['ENVIRONMENT'] == "PRODUCTION":
-    DATABASES = {'default': dj_database_url.config(
-        conn_max_age=600, ssl_require=True)}
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': os.environ['ENGINE'],
-            'HOST': os.environ['DATABASE_HOST'],
-            'NAME': os.environ['DATABASE_NAME'],
-            'USER': os.environ['DATABASE_USER'],
-            'PASSWORD': os.environ['DATABASE_PASS'],
-            'PORT': os.environ['DATABASE_PORT'],
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-        }
-    }
+DATABASES = {
+    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+}
 
 
 # Password validation
@@ -144,10 +135,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = '%s/static/' % BASE_DIR
 CKEDITOR_UPLOAD_PATH = 'blogPost/'
 # co tat tep static hay khoong  tat = 1
