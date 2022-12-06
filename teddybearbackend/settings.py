@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +32,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -47,6 +48,12 @@ INSTALLED_APPS = [
     'CustomUser.apps.CustomuserConfig',
     'StoreManage.apps.StoremanageConfig',
     'BlogPost.apps.BlogpostConfig',
+    'ckeditor',
+    'ckeditor_uploader',
+    "corsheaders",
+    'drf_yasg',
+    'rest_framework',
+    'oauth2_provider',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +64,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'teddybearbackend.urls'
@@ -83,12 +93,21 @@ WSGI_APPLICATION = 'teddybearbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.environ['ENVIRONMENT'] == "PRODUCTION":
+    DATABASES = {'default': dj_database_url.config(
+        conn_max_age=600, ssl_require=True)}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ['ENGINE'],
+            'HOST': os.environ['DATABASE_HOST'],
+            'NAME': os.environ['DATABASE_NAME'],
+            'USER': os.environ['DATABASE_USER'],
+            'PASSWORD': os.environ['DATABASE_PASS'],
+            'PORT': os.environ['DATABASE_PORT'],
+
+        }
     }
-}
 
 
 # Password validation
@@ -127,11 +146,75 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = '%s/static/' % BASE_DIR
+CKEDITOR_UPLOAD_PATH = 'blogPost/'
+# co tat tep static hay khoong  tat = 1
+DISABLE_COLLECTSTATIC = 0
+# CKEDITOR_BASEPATH = "/blogPost/ckeditor/ckeditor/"
+# CKEDITOR_CONFIGS = {
+#     'awesome_ckeditor': {
+#         'toolbar': 'Basic',
+#     },
+# }
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'CustomUser.User'
+CORS_ALLOW_ALL_ORIGINS = True
+LOGIN_URL = '/admin/login/'
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+    "http://127.0.0.1:8000",
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+
+
+]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',),
+
+    #  cau hinh su ly du lieu nhan dc
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser'
+    ],
+}
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
+    # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+}
+
+
+# name : TeddyBearApp
+
+OAUTH2_INFO = {
+    'client_id': 'lM5oaTtPCaGxcU5vhVuNGcY1ZPpp17JaVuGASFvK',
+    'client_secret': 'Z2q47by0SxkM17eleoqU5iZZedXJbi7rVALBIASxWa1a1qEZOWXc2I057mKHbaiEbHAZAudgwDi89wBLlFoptkghEuE6XmXP8s5J08gZW6rynLhgaJBHUpRMxNe559Tu',
+}
 
 
 # go cai dat goi
-#  oauthlib==3.2.2
+#  mysql
