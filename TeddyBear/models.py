@@ -22,8 +22,10 @@ class Category(models.Model):
         ordering = ['id']
     name = models.CharField(null=False, max_length=255, unique=True)
 
+    # def __str__(self):
+    #     return self.name
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 
 class ChildrentCategory(models.Model):
@@ -33,8 +35,10 @@ class ChildrentCategory(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True)
 
+    # def __str__(self):
+    #     return self.name
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 
 class Products(ItemBase):

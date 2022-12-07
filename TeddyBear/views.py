@@ -73,7 +73,7 @@ datas = [
     {
         'name': 'Chuột Mickey',
         'slug': 'chuot-mickey',
-        'image': 'https://dn-thumbs.imagevenue.com/de/75/f8/ME15J0OQ_t.jpg',
+        'image': 'https://cdn-thumbs.imagevenue.com/de/75/f8/ME15J0OQ_t.jpg',
         'discription': 'Chuột Mickey dáng đứng,  mặt ngộ nghĩnh. Bên ngoài là chất nhung siêu mềm mịn, đàn hồi và mát tay. Bên trong là 100% bông trắng loại 1, mềm êm làm cho người ôm cảm giác rất thích thú. Kích thước tính từ đầu đến hết mông.',
         'color': 'no color',
         'size': 'no size',
@@ -1301,9 +1301,15 @@ class SearchNameListViewSet(viewsets.ViewSet):
 
 
 # def index(request):
+#     print('--------------------01-1: ')
 #     for data in CategoryData:
+#         print('--------------------01-2: ')
 #         if data == 'Gau':
+#             print('--------------------01-3: ')
 #             gau = Category.objects.get_or_create(name='Gấu')
+#             print('--------------------01-4: ')
+#             print('--------------------01-4: ', gau[0])
+
 #         elif data == 'Hoa':
 #             hoa = Category.objects.get_or_create(name='Hoa')
 #         elif data == 'Hop qua':
@@ -1313,60 +1319,64 @@ class SearchNameListViewSet(viewsets.ViewSet):
 #         elif data == 'Blog':
 #             blog = Category.objects.get_or_create(name='Blog')
 
-
+#     print('-------------------------------id: ', gau)
 #     for data in childrentCategoryData:
+#         print('--------------------02-1: ')
 #         if data['category'] == 'Gau':
 #             if data['childrent'] == 'Gau bong':
+#                 print('--------------------02-2: ')
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Gấu Bông', category=gau)
+#                     name='Gấu Bông', category=gau[0])
 #             elif data['childrent'] == 'Thu bong':
+#                 print('--------------------02-3: ')
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Thú Bông', category=gau)
+#                     name='Thú Bông', category=gau[0])
 #             elif data['childrent'] == 'Hoat hinh':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Gấu Bông Hoạt Hình', category=gau)
+#                     name='Gấu Bông Hoạt Hình', category=gau[0])
 #             elif data['childrent'] == 'Goi bong':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Gối Bông', category=gau)
+#                     name='Gối Bông', category=gau[0])
 #             elif data['childrent'] == 'Bup be':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Búp Bê', category=gau)
+#                     name='Búp Bê', category=gau[0])
 #         elif data['category'] == 'Hoa':
 #             if data['childrent'] == 'Hong sap':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Hồng sáp', category=hoa)
+#                     name='Hồng sáp', category=hoa[0])
 #             elif data['childrent'] == 'Hoa tien':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Hoa tiền', category=hoa)
+#                     name='Hoa tiền', category=hoa[0])
 
 #         elif data['category'] == 'Hop qua':
 #             if data['childrent'] == 'Socola':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Socola', category=qua)
+#                     name='Socola', category=qua[0])
 #             elif data['childrent'] == 'My pham':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Mỹ phẩm', category=qua)
+#                     name='Mỹ phẩm', category=qua[0])
 
 #         elif data['category'] == 'BeautyProduct':
 #             if data['childrent'] == 'Nail':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Nail', category=beau)
+#                     name='Nail', category=beau[0])
 #             elif data['childrent'] == 'Son':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Son', category=beau)
+#                     name='Son', category=beau[0])
 
 #         elif data['category'] == 'Blog':
 #             if data['childrent'] == 'Qua tang':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Quà tặng', category=blog)
+#                     name='Quà tặng', category=blog[0])
 #             elif data['childrent'] == 'Beautyful':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='Beautyful', category=blog)
+#                     name='Beautyful', category=blog[0])
 #             elif data['childrent'] == 'CheckGenuine':
 #                 ChildrentCategory.objects.get_or_create(
-#                     name='CheckGenuine', category=blog)
+#                     name='CheckGenuine', category=blog[0])
 
 #     for data in datas:
+#         print('--------------------03-1: ')
 #         if data['childrent_category'] == 'Gau bong':
 #             c = ChildrentCategory.objects.get(name='Gấu Bông')
 #         elif data['childrent_category'] == 'Thu bong':
@@ -1402,8 +1412,11 @@ class SearchNameListViewSet(viewsets.ViewSet):
 #         else:
 #             c = ''
 
+#         print('--------------------03-2: ', data['childrent_category'])
+#         print('--------------------03-2: ')
 #         Products.objects.get_or_create(name=data['name'],  image=data['image'], discription=data['discription'], initial_price=data['initial_price'],
 #                                        curent_price=data['curent_price'], discount_product=data['discount_product'], hot_product=data['hot_product'], amount_sold=data['amount_sold'], childrent_category=c)
+#         print('--------------------03-3: ')
 #     return render(request, template_name='index.html', context={
 #         'name': 'tạo database xong'
 #     })
@@ -1486,3 +1499,30 @@ class SearchNameListViewSet(viewsets.ViewSet):
     # https://cdn-thumbs.imagevenue.com/03/9b/69/ME15J0QN_t.jpg
     # https://cdn-thumbs.imagevenue.com/2e/c7/b1/ME15J0QO_t.jpg
     # https://cdn-thumbs.imagevenue.com/fa/c4/fe/ME15J0QP_t.jpg
+
+    # dong gia 40k
+    # https://cdn-thumbs.imagevenue.com/a9/64/49/ME15OULO_t.jpg
+
+
+# https://www.imagevenue.com/ME15OUCJ
+# https://cdn-thumbs.imagevenue.com/08/f3/41/ME15OUCJ_t.jpg
+# https://www.imagevenue.com/ME15OUCK
+# https://cdn-thumbs.imagevenue.com/c6/d2/b8/ME15OUCK_t.jpg
+# https://www.imagevenue.com/ME15OUCL
+# https://cdn-thumbs.imagevenue.com/3a/92/82/ME15OUCL_t.jpg
+# https://www.imagevenue.com/ME15OUCM
+# https://cdn-thumbs.imagevenue.com/eb/15/06/ME15OUCM_t.jpg
+# https://www.imagevenue.com/ME15OUCN
+# https://cdn-thumbs.imagevenue.com/ca/d4/43/ME15OUCN_t.jpg
+# https://www.imagevenue.com/ME15OUCP
+# https://cdn-thumbs.imagevenue.com/b5/48/c7/ME15OUCP_t.jpg
+# https://www.imagevenue.com/ME15OUCR
+# https://cdn-thumbs.imagevenue.com/64/f8/6a/ME15OUCR_t.jpg
+# https://www.imagevenue.com/ME15OUCT
+# https://cdn-thumbs.imagevenue.com/41/7f/f0/ME15OUCT_t.jpg
+# https://www.imagevenue.com/ME15OUCV
+# https://cdn-thumbs.imagevenue.com/9e/bd/ef/ME15OUCV_t.jpg
+# https://www.imagevenue.com/ME15OUCW
+# https://cdn-thumbs.imagevenue.com/30/96/f8/ME15OUCW_t.jpg
+# https://www.imagevenue.com/ME15OUCY
+# https://cdn-thumbs.imagevenue.com/8a/73/6f/ME15OUCY_t.jpg

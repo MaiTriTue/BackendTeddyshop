@@ -16,9 +16,9 @@ admin.site.register(ChildrentCategory)
 
 class ProductsAdmin(admin.ModelAdmin):
 
-    list_display = ['id', 'name', 'create_date', 'updated_date', 'active', 'discription', 'amount_sold', 'like',
+    list_display = ['id', 'name', 'create_date', 'updated_date', 'active',  'amount_sold', 'like',
                     'size', 'color', 'initial_price', 'curent_price', 'discount_product', 'hot_product', 'childrent_category']
-    search_fields = ['id', 'name', 'create_date', 'updated_date', 'active', 'discription', 'amount_sold', 'like',
+    search_fields = ['id', 'name', 'create_date', 'updated_date', 'active',  'amount_sold', 'like',
                      'size', 'color', 'initial_price', 'curent_price', 'discount_product', 'hot_product', 'childrent_category']
 
     list_filter = ['name']

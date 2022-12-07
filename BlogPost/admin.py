@@ -22,9 +22,9 @@ class PostForm(forms.ModelForm):
 class PostAdmin(admin.ModelAdmin):
 
     form = PostForm
-    list_display = ['id', 'name',  'image', 'content', 'create_date',
+    list_display = ['id', 'name',  'image', 'create_date',
                     'updated_date',  'category']
-    search_fields = ['id', 'name',  'image', 'content', 'create_date',
+    search_fields = ['id', 'name',  'image', 'create_date',
                      'updated_date',  'category']
     list_filter = ['name']
     # inlines = (ProductsTagInline,)
