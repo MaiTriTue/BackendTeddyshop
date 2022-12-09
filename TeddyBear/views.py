@@ -1273,6 +1273,14 @@ class GiftBoxHotViewSet(viewsets.ViewSet, generics.ListAPIView):
     pagination_class = PageSize10Pagiration
 
 
+class Price40kViewSet(viewsets.ViewSet, generics.ListAPIView):
+
+    queryset = Products.objects.filter(active=True, curent_price=40000)
+    queryset = queryset.order_by('-amount_sold')
+    serializer_class = ProductSerialize
+    pagination_class = PageSize24Pagiration
+
+
 class SearchNameListViewSet(viewsets.ViewSet):
     parser_classes = [MultiPartParser, JSONParser, FormParser, ]
 

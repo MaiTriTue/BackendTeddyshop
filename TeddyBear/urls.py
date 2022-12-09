@@ -32,6 +32,8 @@ router.register('search-name-list',
                 views.SearchNameListViewSet, 'search-name-list')
 router.register('best-seller',
                 views.ProductBestSellerViewSet, 'best-seller')
+router.register('price40k',
+                views.Price40kViewSet, 'price40k')
 
 
 urlpatterns = [
